@@ -26,6 +26,18 @@ class Articles extends Component {
 							<FormBtn>Submit</FormBtn>
 						</FormContainer>
 					</Col>
+				</Row>		
+				<Row>
+					<Col size="md-12">
+						<FormContainer title="Results" icon="fa fa-table" id="results-articles">
+						</FormContainer>
+					</Col>
+				</Row>
+				<Row>
+					<Col size="md-12">
+						<FormContainer title="Saved Articles" icon="fa fa-table" id="saved-articles">
+						</FormContainer>
+					</Col>
 				</Row>
 			</Container>
 
