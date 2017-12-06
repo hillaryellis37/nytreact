@@ -22,20 +22,21 @@ class Search extends Component {
 	};
 
 	handleInputChange = event => {
-		this.setState({ search: event.target.value });
+		const { name, value} = event.target;
+		this.setState({ [name]: value
+		});
 	};
 
 	handleFormSubmit = event => {
 		event.preventDefault();
-		console.log(this.state.search);
+
 		API.getArticles(this.state.search)
 			.then(res => {
-				console.log(res.data.response);
 				if (res.data.status === "error") {
 					throw new Error(res.data.message);
 				}
-				this.setState({ articles: res.data.message, error: "" });
-				
+				this.setState({ articles: res.data.response.docs, error: "" });
+				console.log(this.state.articles);
 
 			})
 			.catch(err => this.setState({ error: err.message }));
@@ -58,16 +59,30 @@ class Search extends Component {
 						>
 							<Input 
 								for="search" 
+								value={this.state.search}
 								id="search-term"
-								handleInputChange={this.handleInputChange}
+								onChange={this.handleInputChange}
+								name="search"
 							>
 							Search Term:
 							</Input>
-							<Input for="start-year" id="start-year">
-								Start Year (Optional):
+							<Input 
+								for="start-year" 
+								value={this.state.startYear}
+								id="start-year"
+								onChange={this.handleInputChange}
+								name="startYear"
+							>
+							Start Year (Optional):
 							</Input>
-							<Input for="end-year" id="end-year">
-								End Year (Optional):
+							<Input 
+								for="end-year" 
+								value={this.state.endYear}
+								id="end-year"
+								onChange={this.handleInputChange}
+								name="endYear"
+							>
+							End Year (Optional):
 							</Input>
 							<FormBtn
 								handleFormSubmit={this.handleFormSubmit}
@@ -79,16 +94,21 @@ class Search extends Component {
 				<Row>
 					<Col size="md-12">
 						<FormContainer title="Results" icon="fa fa-table" id="results-articles">
+							{this.state.articles.map(article => (
+								<div class="well" key="article._id">	
+									<h3 class='articleHeadline'>
+										<strong>{article.headline.main}</strong>
+									</h3>	
+									<h5>Section: {article.section_name}</h5>
+									<h5>{article.pub_date}</h5>
+									<a hfref={article.web_url}>{article.web_url}</a>
+								</div>
+							))} 
 
 						</FormContainer>
 					</Col>
 				</Row>
-				<Row>
-					<Col size="md-12">
-						<FormContainer title="Saved Articles" icon="fa fa-table" id="saved-articles">
-						</FormContainer>
-					</Col>
-				</Row>
+
 			</Container>
 
 		);
