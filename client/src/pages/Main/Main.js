@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import {Row, Col, Container} from "../../components/Main";
-import { Input, TextArea, FormBtn, FormContainer } from "../../components/Search";
+import {Row, Col, Container} from "../../components/Grid";
+import { Input, FormBtn, FormContainer } from "../../components/Form";
 import Jumbotron from "../../components/Jumbotron";
 
-class Articles extends Component {
+class Search extends Component {
 
 	render() {
 		return (
@@ -45,6 +45,4 @@ class Articles extends Component {
 	}
 }
 
-export default Articles;
-
-
+export default Search;

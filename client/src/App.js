@@ -1,13 +1,13 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Articles from "./pages/Articles";
+import Search from "./pages/Search";
 
 
 const App = () =>
   <Router>
     <div>
       <Switch>
-        <Route exact path="/" component={Articles} />
+        <Route exact path="/" component={Search} />
       </Switch>
     </div>
   </Router>;
