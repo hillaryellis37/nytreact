@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import {Row, Col, Container} from "../../components/Grid";
 import { Input, FormBtn, FormContainer } from "../../components/Form";
 import Jumbotron from "../../components/Jumbotron";
+import { Link } from "react-router-dom";
 
 class Search extends Component {
 
@@ -23,22 +24,13 @@ class Search extends Component {
 							<Input for="end-year" id="end-year">
 								End Year (Optional):
 							</Input>
-							<FormBtn>Submit</FormBtn>
+							<Link to="/search">
+								<FormBtn>Submit</FormBtn>
+							</Link>
 						</FormContainer>
 					</Col>
 				</Row>		
-				<Row>
-					<Col size="md-12">
-						<FormContainer title="Results" icon="fa fa-table" id="results-articles">
-						</FormContainer>
-					</Col>
-				</Row>
-				<Row>
-					<Col size="md-12">
-						<FormContainer title="Saved Articles" icon="fa fa-table" id="saved-articles">
-						</FormContainer>
-					</Col>
-				</Row>
+
 			</Container>
 
 		);

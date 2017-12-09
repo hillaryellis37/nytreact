@@ -14,21 +14,9 @@ class Search extends Component {
 		startYear: "",
 		endYear: "",
 		articles: [],
-		savedArticles: [],
 		error: ""
 
 	};
-
-	componentDidMount() {
-    	this.loadSavedArticles();
-  	}
-
-  	loadSavedArticles = () => {
-  		API.getSavedArticles()
-  		.then(res => 
-  			this.setState({ savedArticles: res.data}))
-  		.catch(err => console.log(err));
-  	};
 
 
 	handleInputChange = event => {
@@ -61,16 +49,12 @@ class Search extends Component {
 			url: articleDetails[0].web_url, 
 			date: articleDetails[0].pub_date 
 		})
-		.then(res => this.loadSavedArticles())
+		.then(res => console.log(res))
         .catch(err => console.log(err));
 
 	};
 
-	deleteArticle = id => {
-		API.deleteArticle(id)
-			.then(res => this.loadSavedArticles())
-			.catch(err => console.log(err));
-	};
+
 
 
 
@@ -135,27 +119,6 @@ class Search extends Component {
 									<Col size="md-2">
 										<SaveBtn onClick={() => this.saveArticle(article._id)}/>	
 									</Col>
-								</div>
-							))} 
-
-						</FormContainer>
-					</Col>
-				</Row>
-				<Row>
-					<Col size="md-12">
-						<FormContainer title="Saved Articles" icon="fa fa-table" id="saved-articles">
-							{this.state.savedArticles.map(article => (
-								<div className="row well" key={article._id}>
-									<Col size="md-10">	
-										<h3 className='articleHeadline'>
-			
-											<strong>{article.title}</strong>
-										</h3>
-									</Col>
-									<Col size="md-2">
-										<DelBtn onClick={() => this.deleteArticle(article._id)}/>	
-									</Col>
-
 								</div>
 							))} 
 

@@ -46,9 +46,10 @@ componentDidMount() {
 								<div className="row well" key={article._id}>
 									<Col size="md-10">	
 										<h3 className='articleHeadline'>
-			
 											<strong>{article.title}</strong>
 										</h3>
+										<h5>{"published: " + article.date}</h5>
+										<a href={article.url}>{article.url}</a>
 									</Col>
 									<Col size="md-2">
 										<DelBtn onClick={() => this.deleteArticle(article._id)}/>	
