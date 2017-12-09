@@ -1,14 +1,10 @@
 import React, { Component } from "react";
 import API from "../../utils/API";
 import {Row, Col, Container} from "../../components/Grid";
-import { Input, FormBtn, FormContainer } from "../../components/Form";
+import { Input, FormBtn, SaveBtn, FormContainer } from "../../components/Form";
 import Jumbotron from "../../components/Jumbotron";
 
-
-let numResults = 0;
-let startYear = 0;
-let endYear = 0;
-
+let articleCounter = 1;
 
 class Search extends Component {
 
@@ -17,17 +13,22 @@ class Search extends Component {
 		startYear: "",
 		endYear: "",
 		articles: [],
+		title: "",
+		link: "",
+		articleKey: "",
 		error: ""
 
 	};
 
 	handleInputChange = event => {
 		const { name, value} = event.target;
-		this.setState({ [name]: value
+		this.setState({ 
+			[name]: value
 		});
 	};
 
 	handleFormSubmit = event => {
+		articleCounter = 1;
 		event.preventDefault();
 
 		API.getArticles(this.state.search)
@@ -40,6 +41,13 @@ class Search extends Component {
 
 			})
 			.catch(err => this.setState({ error: err.message }));
+	};
+
+	saveArticle = (id) => {
+		console.log(id);
+
+
+
 	};
 
 
@@ -95,13 +103,16 @@ class Search extends Component {
 					<Col size="md-12">
 						<FormContainer title="Results" icon="fa fa-table" id="results-articles">
 							{this.state.articles.map(article => (
-								<div class="well" key="article._id">	
-									<h3 class='articleHeadline'>
-										<strong>{article.headline.main}</strong>
-									</h3>	
-									<h5>Section: {article.section_name}</h5>
-									<h5>{article.pub_date}</h5>
-									<a hfref={article.web_url}>{article.web_url}</a>
+								<div className="row well" key={article._id}>
+									<Col size="md-10">	
+										<h3 className='articleHeadline'>
+											<span className='label label-primary'>{articleCounter++}</span>
+											<strong>{article.headline.main}</strong>
+										</h3>
+									</Col>
+									<Col size="md-2">
+										<SaveBtn onClick={() => this.saveArticle(article._id)}/>	
+									</Col>
 								</div>
 							))} 
 
