@@ -1,9 +1,37 @@
 import React, { Component } from "react";
+import API from "../../utils/API";
+import { Link } from "react-router-dom";
 import {Row, Col, Container} from "../../components/Grid";
-import { Input, FormBtn, FormContainer } from "../../components/Form";
+import { Input, FormBtn, SaveBtn, DelBtn, FormContainer } from "../../components/Form";
 import Jumbotron from "../../components/Jumbotron";
 
-class Search extends Component {
+let articleCounter = 1;
+
+class Saved extends Component {
+
+	state = {
+		savedArticles: [],
+		error: ""
+
+	};
+
+componentDidMount() {
+    	this.loadSavedArticles();
+  	}
+
+  	loadSavedArticles = () => {
+  		API.getSavedArticles()
+  		.then(res => 
+  			this.setState({ savedArticles: res.data}))
+  		.catch(err => console.log(err));
+  	};
+
+  	deleteArticle = id => {
+		API.deleteArticle(id)
+			.then(res => this.loadSavedArticles())
+			.catch(err => console.log(err));
+	};
+
 
 	render() {
 		return (
@@ -14,6 +42,21 @@ class Search extends Component {
 				<Row>
 					<Col size="md-12">
 						<FormContainer title="Saved Articles" icon="fa fa-table" id="saved-articles">
+							{this.state.savedArticles.map(article => (
+								<div className="row well" key={article._id}>
+									<Col size="md-10">	
+										<h3 className='articleHeadline'>
+			
+											<strong>{article.title}</strong>
+										</h3>
+									</Col>
+									<Col size="md-2">
+										<DelBtn onClick={() => this.deleteArticle(article._id)}/>	
+									</Col>
+
+								</div>
+							))} 
+
 						</FormContainer>
 					</Col>
 				</Row>
@@ -23,4 +66,4 @@ class Search extends Component {
 	}
 }
 
-export default Search;
+export default Saved;
