@@ -5,8 +5,16 @@ const queryURLBase = "https://api.nytimes.com/svc/search/v2/articlesearch.json?a
   authKey + "&q=";
 
 export default {
-	getArticles: function(searchTerm) {
+	getAPIArticles: function(searchTerm) {
 		return axios.get(queryURLBase + searchTerm);
+	},
+
+	saveArticle: function(articleData) {
+		return axios.post("/api/articles", articleData);
+	},
+
+	getSavedArticles: function() {
+		return axios.get("/api/articles");
 	}
 
 };

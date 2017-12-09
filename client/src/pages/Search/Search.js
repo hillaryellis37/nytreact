@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import API from "../../utils/API";
+import { Link } from "react-router-dom";
 import {Row, Col, Container} from "../../components/Grid";
 import { Input, FormBtn, SaveBtn, FormContainer } from "../../components/Form";
 import Jumbotron from "../../components/Jumbotron";
@@ -13,9 +14,6 @@ class Search extends Component {
 		startYear: "",
 		endYear: "",
 		articles: [],
-		title: "",
-		link: "",
-		articleKey: "",
 		error: ""
 
 	};
@@ -31,7 +29,7 @@ class Search extends Component {
 		articleCounter = 1;
 		event.preventDefault();
 
-		API.getArticles(this.state.search)
+		API.getAPIArticles(this.state.search)
 			.then(res => {
 				if (res.data.status === "error") {
 					throw new Error(res.data.message);
@@ -43,10 +41,16 @@ class Search extends Component {
 			.catch(err => this.setState({ error: err.message }));
 	};
 
-	saveArticle = (id) => {
-		console.log(id);
+	saveArticle = id => {
+		let articleDetails = this.state.articles.filter(article => article._id === id);
 
-
+		API.saveArticle({ 
+			title: articleDetails[0].headline.main, 
+			url: articleDetails[0].web_url, 
+			date: articleDetails[0].pub_date 
+		})
+		.then(res => console.log(res.data))
+        .catch(err => console.log(err));
 
 	};
 
