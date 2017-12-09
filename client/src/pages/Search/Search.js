@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import API from "../../utils/API";
 import { Link } from "react-router-dom";
 import {Row, Col, Container} from "../../components/Grid";
-import { Input, FormBtn, SaveBtn, FormContainer } from "../../components/Form";
+import { Input, FormBtn, SaveBtn, DelBtn, FormContainer } from "../../components/Form";
 import Jumbotron from "../../components/Jumbotron";
 
 let articleCounter = 1;
@@ -64,6 +64,12 @@ class Search extends Component {
 		.then(res => this.loadSavedArticles())
         .catch(err => console.log(err));
 
+	};
+
+	deleteArticle = id => {
+		API.deleteArticle(id)
+			.then(res => this.loadSavedArticles())
+			.catch(err => console.log(err));
 	};
 
 
@@ -145,6 +151,9 @@ class Search extends Component {
 			
 											<strong>{article.title}</strong>
 										</h3>
+									</Col>
+									<Col size="md-2">
+										<DelBtn onClick={() => this.deleteArticle(article._id)}/>	
 									</Col>
 
 								</div>

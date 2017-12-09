@@ -15,6 +15,10 @@ export default {
 
 	getSavedArticles: function() {
 		return axios.get("/api/articles");
+	},
+
+	deleteArticle: function(id) {
+		return axios.delete("api/articles/" + id);
 	}
 
 };
