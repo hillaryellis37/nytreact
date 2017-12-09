@@ -14,9 +14,22 @@ class Search extends Component {
 		startYear: "",
 		endYear: "",
 		articles: [],
+		savedArticles: [],
 		error: ""
 
 	};
+
+	componentDidMount() {
+    	this.loadSavedArticles();
+  	}
+
+  	loadSavedArticles = () => {
+  		API.getSavedArticles()
+  		.then(res => 
+  			this.setState({ savedArticles: res.data}))
+  		.catch(err => console.log(err));
+  	};
+
 
 	handleInputChange = event => {
 		const { name, value} = event.target;
@@ -35,7 +48,6 @@ class Search extends Component {
 					throw new Error(res.data.message);
 				}
 				this.setState({ articles: res.data.response.docs, error: "" });
-				console.log(this.state.articles);
 
 			})
 			.catch(err => this.setState({ error: err.message }));
@@ -49,7 +61,7 @@ class Search extends Component {
 			url: articleDetails[0].web_url, 
 			date: articleDetails[0].pub_date 
 		})
-		.then(res => console.log(res.data))
+		.then(res => this.loadSavedArticles())
         .catch(err => console.log(err));
 
 	};
@@ -117,6 +129,24 @@ class Search extends Component {
 									<Col size="md-2">
 										<SaveBtn onClick={() => this.saveArticle(article._id)}/>	
 									</Col>
+								</div>
+							))} 
+
+						</FormContainer>
+					</Col>
+				</Row>
+				<Row>
+					<Col size="md-12">
+						<FormContainer title="Saved Articles" icon="fa fa-table" id="saved-articles">
+							{this.state.savedArticles.map(article => (
+								<div className="row well" key={article._id}>
+									<Col size="md-10">	
+										<h3 className='articleHeadline'>
+			
+											<strong>{article.title}</strong>
+										</h3>
+									</Col>
+
 								</div>
 							))} 
 
